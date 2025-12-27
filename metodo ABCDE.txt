@@ -1,0 +1,14 @@
+A - assets (recursos: imagens, vídeos, gifs, paletas cores)
+B - Bases (dados para gerar a dashboard principal ou outras medidas)
+C - Cálculos (Meio de campo que processa dados para transformar em informações)
+D - dashboard(painel visual)
+E - extras
+---------------------------------------------
+-> Criar no excel a seguinte organização:
+cores
+logos
+infos relevantes
+icones
+
+---------------------------------------------
+DADOS != informações
