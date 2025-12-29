@@ -54,7 +54,6 @@ limiar = 128
 for x in range(largura):
     for y in range(altura):
         r, g, b = imagem.getpixel((x, y))
-
         cinza = int(0.299 * r + 0.587 * g + 0.114 * b)
 
         if cinza >= limiar:
