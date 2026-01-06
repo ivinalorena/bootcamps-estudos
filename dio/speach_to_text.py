@@ -8,14 +8,14 @@ Para realizar este projeto, podem ser utilizada todas as bibliotecas apresentada
 Para auxiliar no projeto, estão disponíveis dois exemplos, um para text to speech e outro para speech to text. Ambos podem ser encontrados no Github, seguindo os links abaixo:  """
 
 # Text to Speach com Processamento de Linguagem Natural: 
-from gtts import gTTS #pip install gTTS
+""" from gtts import gTTS #pip install gTTS
 text_to_say = "how are you doing?"
 language = "en"
 
 gtts_object = gTTS(text=text_to_say, lang=language, slow=False)
 #gtts_object.save("test.mp3")
 gtts_object.save('audio_teste.wav')
-
+ """
 """ from IPython.display import Audio
 Audio('/content/gtts.wav')
  """
@@ -32,7 +32,7 @@ import speech_recognition as sr
 from gtts import gTTS
 import os
 import datetime
-import playsound
+from playsound3 import playsound
 import pyjokes
 import wikipedia
 import pyaudio
@@ -45,12 +45,12 @@ def get_audio():
   with sr.Microphone() as source:
     r.pause_threshold = 1
     # espere um segundo 
-    r.adjust_for_ambient_noise(source, durantion=1)
+    r.adjust_for_ambient_noise(source, duration=1)
     audio = r.listen(source)
     said = ""
 
     try:
-      said = r.reconize_google(audio) #, language="en-US")
+      said = r.recognize_google(audio, language="pt-BR") #, language="en-US")
       print(said)
 
     except Exception as e:
@@ -59,7 +59,7 @@ def get_audio():
   return said
 
 def speak(text):
-  tss=gTTS(text=text, lang="en")
+  tss=gTTS(text=text, lang="pt-BR")
   filename="voz.mp3"
   try:
     os.remove(filename)
@@ -67,7 +67,7 @@ def speak(text):
     pass
 
   tss.save(filename)
-  playsound.playsound(filename)
+  playsound(filename)
 
 # text = get_audio()
 # speak(text)
@@ -82,14 +82,21 @@ while True:
 
     elif 'pesquisar' in text:
         speak("O que você gostaria de pesquisar?")
-        query = text.replace("pesquisar", "")
-        result = wikipedia.summary(query, sentences=2)
-        speak("de acordo com a wikipedia") #speak(result)
-        print(result)
-        speak(result)
+        query = get_audio()
+        if query and query.strip():
+            try:
+                result = wikipedia.summary(query, sentences=2)
+                speak("de acordo com a wikipedia")
+                print(result)
+                speak(result, language="pt-BR")
+            except Exception as e:
+                speak("Desculpe, não encontrei nada sobre isso na Wikipedia")
+                print(f"Error: {e}")
+        else:
+            speak("Não entendi o que você quer pesquisar")
 
     elif 'piada' in text:
-        speak(pyjokes.get_joke())
+        speak(pyjokes.get_joke(), language='pt-BR')
 
     elif 'farmacia' in text:
        speak("Buscando farmácias próximas a sua região...")
